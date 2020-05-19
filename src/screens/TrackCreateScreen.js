@@ -1,14 +1,32 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet} from 'react-native';
 import {Text} from 'react-native-elements';
 import {SafeAreaView} from 'react-navigation';
+import {requestPermissionsAsync} from 'expo-location';
 import Map from '../components/Map';
 
 const TrackCreateScreen = () => {
+
+    const [err, setErr] = useState(null); //hata olup olmadığını görüntülemek için
+
+    const startWatching = async () => {
+        try {
+            await requestPermissionsAsync();
+        } catch (e) { //eğer kullanıcı reddettiyse otomatik olarak catch'e düşer
+            setErr(e); //err state'inin değerini güncelleriz.
+        }
+    };
+
+    useEffect(()=> {
+        startWatching();
+    }, [] );
+
+
     return(
         <SafeAreaView forceInset= {{top: 'always'}}>
             <Text h2> Create a Track</Text>
             <Map/>
+            {err ? <Text>Please enable location services</Text>: null}
         </SafeAreaView>
     ); 
 };
