@@ -1,3 +1,4 @@
+import '../_mockLocation';
 import React, {useEffect, useState} from 'react';
 import { StyleSheet} from 'react-native';
 import {Text} from 'react-native-elements';
@@ -12,8 +13,9 @@ const TrackCreateScreen = () => {
     const startWatching = async () => {
         try {
             await requestPermissionsAsync();
-        } catch (e) { //eğer kullanıcı reddettiyse otomatik olarak catch'e düşer
-            setErr(e); //err state'inin değerini güncelleriz.
+        } catch (error)
+        { //eğer kullanıcı reddettiyse otomatik olarak catch'e düşer
+            setErr(error) //err state'inin değerini güncelleriz.
         }
     };
 
@@ -21,12 +23,11 @@ const TrackCreateScreen = () => {
         startWatching();
     }, [] );
 
-
     return(
         <SafeAreaView forceInset= {{top: 'always'}}>
             <Text h2> Create a Track</Text>
             <Map/>
-            {err ? <Text>Please enable location services</Text>: null}
+            {err ? <Text>Please enable location services</Text> : null}
         </SafeAreaView>
     ); 
 };
