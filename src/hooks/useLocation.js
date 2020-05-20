@@ -5,13 +5,14 @@ import {
     watchPositionAsync
 } from 'expo-location';
 
-export default (callback) => {
+export default (shouldTrack, callback) => {
     const [err, setErr] = useState(null); //hata olup olmadığını görüntülemek için
+    const [subscriber, setSubscriber] = useState(null);
 
     const startWatching = async () => {
         try {
             await requestPermissionsAsync();
-            const subscriber = await watchPositionAsync ({
+            const sub = await watchPositionAsync ({
                 accuracy: Accuracy.BestForNavigation,
                 timeInterval: 1000,
                 distanceInterval: 10
@@ -22,6 +23,7 @@ export default (callback) => {
             }*/
                 callback
             );
+            setSubscriber(sub);
         } catch (error)
         { //eğer kullanıcı reddettiyse otomatik olarak catch'e düşer
             setErr(error) //err state'inin değerini güncelleriz.
@@ -29,8 +31,13 @@ export default (callback) => {
     };
 
     useEffect(()=> {
-        startWatching();
-    }, [] );
+        if (shouldTrack) {
+            startWatching();
+        } else {
+            subscriber.remove();
+            setSubscriber(null);
+        }
+    }, [shouldTrack] );
 
     return [err];
 };

@@ -12,7 +12,7 @@ const TrackCreateScreen = ({isFocused}) => {
     const {addLocation} = useContext(LocationContext);
 
     //const [err] = useLocation((location) => addLocation(location));
-    const [err] = useLocation(addLocation);
+    const [err] = useLocation(isFocused, addLocation);
 
     //console.log(isFocused); //ekrandan ayrıldığında isFocused değeri false olur. Ekrandayken true olur.
 

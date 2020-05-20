@@ -14,7 +14,9 @@ const locationReducer = (state, action) => {
 const startRecording = dispatch => () => {};
 const stopRecording = dispatch => () => {};
 //yeni bir konum eklemek veya güncellemek için kullanacağım action function
+//kullanıcı konumunu her güncellediğinde bu fonks. çağırılır
 const addLocation = dispatch => (location) => {
+    console.log('HI THERE!');
     dispatch({type: 'add_current_location', payload: location});
 };
 
