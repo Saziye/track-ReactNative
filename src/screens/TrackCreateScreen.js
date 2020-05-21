@@ -10,10 +10,12 @@ import TrackForm from '../components/TrackForm';
 
 const TrackCreateScreen = ({isFocused}) => {
 
-    const {addLocation} = useContext(LocationContext);
+    const {state, addLocation} = useContext(LocationContext);
 
     //const [err] = useLocation((location) => addLocation(location));
-    const [err] = useLocation(isFocused, addLocation);
+    const [err] = useLocation(isFocused, (location) => {
+        addLocation(location, state.recording);
+    });
 
     //console.log(isFocused); //ekrandan ayrıldığında isFocused değeri false olur. Ekrandayken true olur.
 
