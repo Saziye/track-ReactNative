@@ -1,5 +1,5 @@
 import '../_mockLocation';
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import { StyleSheet} from 'react-native';
 import {Text} from 'react-native-elements';
 import {SafeAreaView, withNavigationFocus} from 'react-navigation';
@@ -12,10 +12,14 @@ const TrackCreateScreen = ({isFocused}) => {
 
     const {state, addLocation} = useContext(LocationContext);
 
-    //const [err] = useLocation((location) => addLocation(location));
-    const [err] = useLocation(isFocused, (location) => {
-        addLocation(location, state.recording);
-    });
+    const callback = useCallback(
+        location => { 
+            addLocation(location, state.recording); 
+        }, 
+        [state.recording]
+    );
+
+    const [err] = useLocation(isFocused, callback);
 
     //console.log(isFocused); //ekrandan ayrıldığında isFocused değeri false olur. Ekrandayken true olur.
 
