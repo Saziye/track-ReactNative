@@ -14,9 +14,9 @@ const trackReducer = (state, action) => {
 const fetchTracks = dispatch => () => {};
 
 //name ve locations property'lerini alıp kaydetmesi için backend API'a göndereceğimiz action function
-const createTrack = dispatch => (name, locations) => {
+const createTrack = dispatch => async(name, locations) => {
     //make a request to our api
-    console.log(name,locations.length);
+    await trackerApi.post('/tracks', {name, locations});
 };
 
 export const { Provider, Context } = createDataContext(
